@@ -1,0 +1,17 @@
+---
+- hosts: all
+  vars:
+    - docker_swarm_interface: "enp0s8"
+    - docker_latest: true
+    - docker_experimental: true
+    - docker_swarm_config_networks: true
+    - docker_swarm_networks:
+      - name: "infra"
+        driver: "overlay"
+        state: "present"
+    - docker_swarm_config_chrony: true
+    - docker_swarm_chrony_servers:
+      - 0.pool.ntp.org
+      - 1.pool.ntp.org
+  roles:
+    - role: docker-swarm-atomic

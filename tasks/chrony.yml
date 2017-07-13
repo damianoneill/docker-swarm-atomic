@@ -1,0 +1,15 @@
+---
+- name: chrony | copy the chrony.conf.
+  template:
+    src: etc/chrony.conf.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: 0664
+  notify: restart chrony
+
+- name: chrony | ensure chrony services is started and enabled at boot.
+  service:
+    name: chronyd
+    state: started
+    enabled: yes

@@ -1,0 +1,42 @@
+---
+- name: docker | Configure Docker Latest
+  replace:
+    dest: /etc/sysconfig/docker
+    regexp: '#DOCKER'
+    replace: 'DOCKER'
+  become: true
+  notify:
+    - restart docker-latest
+  when: >
+        docker_latest
+
+- name: docker | Disable Docker
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+  become: true
+  when: >
+        docker_latest
+
+
+- name: docker | Enable Docker Latest
+  service:
+    name: docker-latest
+    state: started
+    enabled: yes
+  become: true
+  when: >
+        docker_latest
+
+- name: docker | Enable Experimental
+  replace:
+    dest: /etc/sysconfig/docker-latest
+    regexp: "OPTIONS='--selinux-enabled"
+    replace: "OPTIONS='--experimental --selinux-enabled"
+  become: true
+  notify:
+    - restart docker-latest
+  when: >
+        docker_latest and
+        docker_experimental

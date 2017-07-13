@@ -1,0 +1,39 @@
+---
+# defaults file for docker-swarm-atomic
+
+# Configure chrony in the swarm
+docker_swarm_config_chrony: false
+docker_swarm_chrony_servers: []
+# - 0.pool.ntp.org
+# - 1.pool.ntp.org
+
+# Option of substituting the atomic host’s default docker 1.12 container engine
+# with a more recent, docker 1.13-based version, provided via the docker-latest package
+docker_latest: false
+
+# Enable the experimental flag on dockerd, docker_latest needs to be enabled as well
+docker_experimental: false
+
+docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}"
+docker_swarm_interface: "enp0s8"
+docker_swarm_port: "2377"
+
+# Configure docker networks in the swarm
+docker_swarm_config_networks: false
+docker_swarm_networks: []
+  # - name: "infra"
+  #   driver: "overlay"
+  #   state: "present"
+  # - name: "proxy"
+  #   driver: "overlay"
+  #   state: "absent"
+
+# Define Ansible group which contains your Docker swarm managers
+docker_swarm_managers_ansible_group: 'docker-swarm-managers'
+
+# Defines first node in docker_swarm_managers_ansible_group as primary
+docker_swarm_primary_manager: '{{ groups[docker_swarm_managers_ansible_group][0] }}'
+
+
+# Define Ansible group which contains you Docker swarm workers
+docker_swarm_workers_ansible_group: 'docker-swarm-workers'

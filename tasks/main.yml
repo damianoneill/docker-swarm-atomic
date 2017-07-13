@@ -1,0 +1,19 @@
+---
+# tasks file for docker-swarm-atomic
+
+- include: chrony.yml
+  when: >
+        docker_swarm_config_chrony and
+        docker_swarm_chrony_servers is defined
+
+- include: docker.yml
+  when: >
+      docker_latest or
+      docker_experimental
+
+- include: cluster.yml
+
+- include: networks.yml
+  when: >
+        docker_swarm_config_networks and
+        docker_swarm_networks is defined
