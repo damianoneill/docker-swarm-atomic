@@ -13,7 +13,7 @@ Ensure that your Ansible hosts are running [Atomic](https://wiki.centos.org/Spec
 Role Variables
 --------------
 
-````
+````yml
 # Configure chrony in the swarm
 docker_swarm_config_chrony: false
 docker_swarm_chrony_servers: []
@@ -60,7 +60,7 @@ None
 Example Playbook
 ----------------
 
-```
+```yml
 - hosts: all
   vars:
     - docker_swarm_interface: "enp0s8"
@@ -86,26 +86,31 @@ Before installing molecule, make sure you have a well configured python environm
 
 Solution uses [molecule](https://molecule.readthedocs.io/en/master/) and vagrant, ensure that both are installed locally.
 
-````
+````sh
 pip install molecule
 pip install python-vagrant
 ````
 
 The tests can then executed manually with
 
-````
+````sh
 molecule test
 ````
 
-The solution requires a full operating system to test, hence the use of vagrant rather than docker.  Subsequently no automation of the tests can be done through travis as travis doesn't support virtualbox.
-
+The solution requires a full operating system to test, hence the use of vagrant rather than docker.  Subsequently no automation of the tests can be done through travis as travis doesn't support Virtualbox.
 
 To interact with the boxes, you can start them using the following command
 
-````
+````sh
+molecule converge
 molecule login --host node01
 ````
 
+And teardown the instances with 
+
+````sh
+molecule destroy
+````
 
 License
 -------
