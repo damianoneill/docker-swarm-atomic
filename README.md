@@ -82,7 +82,9 @@ Example Playbook
 Test
 ----
 
-Solution uses [molecule](https://molecule.readthedocs.io/en/master/) and vagrant, ensure that both are installed locally
+Before installing molecule, make sure you have a well configured python environment on osx. See this [medium article](https://medium.com/@briantorresgil/definitive-guide-to-python-on-mac-osx-65acd8d969d0)
+
+Solution uses [molecule](https://molecule.readthedocs.io/en/master/) and vagrant, ensure that both are installed locally.
 
 ````
 pip install molecule
@@ -96,6 +98,14 @@ molecule test
 ````
 
 The solution requires a full operating system to test, hence the use of vagrant rather than docker.  Subsequently no automation of the tests can be done through travis as travis doesn't support virtualbox.
+
+
+To interact with the boxes, you can start them using the following command
+
+````
+molecule login --host node01
+````
+
 
 License
 -------
